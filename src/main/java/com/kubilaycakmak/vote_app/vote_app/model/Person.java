@@ -1,7 +1,9 @@
 package com.kubilaycakmak.vote_app.vote_app.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Person {
@@ -22,7 +24,19 @@ public class Person {
     @OneToMany
     private List<Vote> vote;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "person_role",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roleSet = new HashSet<>();
+
     public Person() {
+    }
+    public Person(String name, String email, String password){
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 
     public Person(String name, String surname, String password, String gender, String email, String lastIP, String lastDevice, String lastLocation, Address address, int age, Long nationId, List<Vote> vote) {
@@ -114,6 +128,14 @@ public class Person {
 
     public String getLastDevice() {
         return lastDevice;
+    }
+
+    public Set<Role> getRoleSet() {
+        return roleSet;
+    }
+
+    public void setRoleSet(Set<Role> roleSet) {
+        this.roleSet = roleSet;
     }
 
     public void setLastDevice(String lastDevice) {
