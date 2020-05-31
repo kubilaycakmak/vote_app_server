@@ -33,6 +33,21 @@ public class Person {
 
     public Person() {
     }
+
+    public Person(String name, String surname, String password, String gender, String email, String lastIP, String lastDevice, String lastLocation, int age, Long nationId, Set<Role> roleSet) {
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.gender = gender;
+        this.email = email;
+        this.lastIP = lastIP;
+        this.lastDevice = lastDevice;
+        this.lastLocation = lastLocation;
+        this.age = age;
+        this.nationId = nationId;
+        this.roleSet = roleSet;
+    }
+
     public Person(String name, String email, String password){
         this.name = name;
         this.email = email;
@@ -68,6 +83,9 @@ public class Person {
         this.age = age;
         this.nationId = nationId;
         this.vote = vote;
+    }
+
+    public Person(String name, String email, String surname, String gender, String lastIP, String lastDevice, String lastLocation, int age, long nationId, String encode) {
     }
 
     public Long getId() {

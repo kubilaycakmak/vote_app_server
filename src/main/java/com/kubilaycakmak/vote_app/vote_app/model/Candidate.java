@@ -9,39 +9,21 @@ public class Candidate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-    private String surname;
-    private int age;
     private String nation;
     private String spouse;
     private String bio;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "party_id", referencedColumnName = "id")
-    private Party party;
+    @OneToOne
+    private Person person;
 
     public Candidate() {
     }
 
-    public Candidate(String name, String surname, int age, String nation, String spouse, String bio, Party party) {
-        this.name = name;
-        this.surname = surname;
-        this.age = age;
+    public Candidate(String nation, String spouse, String bio, Person person) {
         this.nation = nation;
         this.spouse = spouse;
         this.bio = bio;
-        this.party = party;
-    }
-
-    public Candidate(Long id, String name, String surname, int age, String nation, String spouse, String bio, Party party) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.age = age;
-        this.nation = nation;
-        this.spouse = spouse;
-        this.bio = bio;
-        this.party = party;
+        this.person = person;
     }
 
     public Long getId() {
@@ -50,30 +32,6 @@ public class Candidate {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public String getNation() {
@@ -100,25 +58,22 @@ public class Candidate {
         this.bio = bio;
     }
 
-    public Party getParty() {
-        return party;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setParty(Party party) {
-        this.party = party;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     @Override
     public String toString() {
         return "Candidate{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", age=" + age +
                 ", nation='" + nation + '\'' +
                 ", spouse='" + spouse + '\'' +
                 ", bio='" + bio + '\'' +
-                ", party=" + party +
+                ", person=" + person +
                 '}';
     }
 }

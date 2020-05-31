@@ -1,9 +1,5 @@
 package com.kubilaycakmak.vote_app.vote_app.model;
-
-import org.hibernate.annotations.ManyToAny;
-
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Party {
@@ -16,27 +12,22 @@ public class Party {
     private String dateOfFoundation;
     private String ideology;
 
-    @OneToOne(mappedBy = "party")
+    @OneToOne
     private Candidate candidate;
 
-    @ManyToMany
-    private List<Election> election;
-
-    public Party(String name, String dateOfFoundation, String ideology, Candidate candidate, List<Election> election) {
+    public Party(String name, String dateOfFoundation, String ideology, Candidate candidate) {
         this.name = name;
         this.dateOfFoundation = dateOfFoundation;
         this.ideology = ideology;
         this.candidate = candidate;
-        this.election = election;
     }
 
-    public Party(Long id, String name, String dateOfFoundation, String ideology, Candidate candidate, List<Election> election) {
+    public Party(Long id, String name, String dateOfFoundation, String ideology, Candidate candidate) {
         this.id = id;
         this.name = name;
         this.dateOfFoundation = dateOfFoundation;
         this.ideology = ideology;
         this.candidate = candidate;
-        this.election = election;
     }
 
     public Party() {
@@ -82,14 +73,6 @@ public class Party {
         this.candidate = candidate;
     }
 
-    public List<Election> getElection() {
-        return election;
-    }
-
-    public void setElection(List<Election> election) {
-        this.election = election;
-    }
-
     @Override
     public String toString() {
         return "Party{" +
@@ -98,7 +81,6 @@ public class Party {
                 ", dateOfFoundation='" + dateOfFoundation + '\'' +
                 ", ideology='" + ideology + '\'' +
                 ", candidate=" + candidate +
-                ", election=" + election +
                 '}';
     }
 }

@@ -1,5 +1,9 @@
 package com.kubilaycakmak.vote_app.vote_app.payload.response;
 
+import com.kubilaycakmak.vote_app.vote_app.model.Party;
+import com.kubilaycakmak.vote_app.vote_app.model.Vote;
+
+import java.util.Date;
 import java.util.List;
 
 public class JwtResponse {
@@ -17,6 +21,7 @@ public class JwtResponse {
         this.email = email;
         this.roles = roles;
     }
+
 
     public String getAccessToken() {
         return token;

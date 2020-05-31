@@ -1,6 +1,5 @@
 package com.kubilaycakmak.vote_app.vote_app.controller;
 
-
 import com.kubilaycakmak.vote_app.vote_app.model.ERole;
 import com.kubilaycakmak.vote_app.vote_app.model.Person;
 import com.kubilaycakmak.vote_app.vote_app.model.Role;
@@ -49,6 +48,9 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticatePerson(@Valid @RequestBody LoginRequest loginRequest){
+        System.out.println(loginRequest.getEmail());
+        System.out.println(loginRequest.getPassword());
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
@@ -72,18 +74,20 @@ public class AuthController {
         if (personRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
-        }
-
-        if (personRepository.existsByEmail(signUpRequest.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Email is already in use!"));
+                    .body(new MessageResponse("Error: Email is already taken!"));
         }
 
         // Create new user's account
-        Person person = new Person(signUpRequest.getName(),
+        Person person = new Person(
+                signUpRequest.getName(),
                 signUpRequest.getEmail(),
+                signUpRequest.getSurname(),
+                signUpRequest.getGender(),
+                signUpRequest.getLastIP(),
+                signUpRequest.getLastDevice(),
+                signUpRequest.getLastLocation(),
+                signUpRequest.getAge(),
+                signUpRequest.getNationId(),
                 encoder.encode(signUpRequest.getPassword()));
 
         Set<String> strRoles = signUpRequest.getRole();

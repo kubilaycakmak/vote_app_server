@@ -16,32 +16,31 @@ public class Election {
     private String createdBy;
     private String description;
 
+
     @OneToMany
     private List<Party> parties;
 
-    @ManyToOne
-    private Vote vote;
+    @OneToMany
+    private List<Candidate> candidates;
 
     public Election() {
     }
 
-    public Election(Date dateStart, Date dateEnd, String createdBy, String description, List<Party> parties, Vote vote) {
+    public Election(Date dateStart, Date dateEnd, String createdBy, String description, List<Party> parties) {
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
         this.createdBy = createdBy;
         this.description = description;
         this.parties = parties;
-        this.vote = vote;
     }
 
-    public Election(Long id, Date dateStart, Date dateEnd, String createdBy, String description, List<Party> parties, Vote vote) {
+    public Election(Long id, Date dateStart, Date dateEnd, String createdBy, String description, List<Party> parties) {
         this.id = id;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
         this.createdBy = createdBy;
         this.description = description;
         this.parties = parties;
-        this.vote = vote;
     }
 
     public Long getId() {
@@ -92,14 +91,6 @@ public class Election {
         this.parties = parties;
     }
 
-    public Vote getVote() {
-        return vote;
-    }
-
-    public void setVote(Vote vote) {
-        this.vote = vote;
-    }
-
     @Override
     public String toString() {
         return "Election{" +
@@ -109,7 +100,6 @@ public class Election {
                 ", createdBy='" + createdBy + '\'' +
                 ", description='" + description + '\'' +
                 ", parties=" + parties +
-                ", vote=" + vote +
                 '}';
     }
 }

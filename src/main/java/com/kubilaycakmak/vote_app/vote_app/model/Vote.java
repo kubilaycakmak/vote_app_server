@@ -1,9 +1,6 @@
 package com.kubilaycakmak.vote_app.vote_app.model;
 
-import com.sun.deploy.xml.GeneralEntity;
-
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Vote {
@@ -11,8 +8,14 @@ public class Vote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
-    private List<Person> person;
+    @ManyToOne
+    private Person person;
+
+    private int score;
+
+    @OneToOne
+    @JoinColumn(name = "party_id")
+    private Party party;
 
     @ManyToOne
     private Election election;
@@ -20,15 +23,25 @@ public class Vote {
     public Vote() {
     }
 
-    public Vote(List<Person> person, Election election) {
-        this.person = person;
+    public Vote(Party party, Election election, int score) {
+        this.party = party;
         this.election = election;
+        this.score = score;
     }
 
-    public Vote(Long id, List<Person> person, Election election) {
+    public Vote(Long id, Party party, Election election, int score) {
         this.id = id;
-        this.person = person;
+        this.party = party;
         this.election = election;
+        this.score = score;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public Long getId() {
@@ -39,12 +52,12 @@ public class Vote {
         this.id = id;
     }
 
-    public List<Person> getPerson() {
-        return person;
+    public Party getParty() {
+        return party;
     }
 
-    public void setPerson(List<Person> person) {
-        this.person = person;
+    public void setParty(Party party) {
+        this.party = party;
     }
 
     public Election getElection() {
@@ -59,8 +72,9 @@ public class Vote {
     public String toString() {
         return "Vote{" +
                 "id=" + id +
-                ", person=" + person +
+                ", party=" + party +
                 ", election=" + election +
+                ", score=" + score +
                 '}';
     }
 }
