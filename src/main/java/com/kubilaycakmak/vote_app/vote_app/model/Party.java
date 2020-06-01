@@ -1,5 +1,10 @@
 package com.kubilaycakmak.vote_app.vote_app.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Party {
@@ -15,32 +20,21 @@ public class Party {
     @OneToOne
     private Candidate candidate;
 
-    public Party(String name, String dateOfFoundation, String ideology, Candidate candidate) {
-        this.name = name;
-        this.dateOfFoundation = dateOfFoundation;
-        this.ideology = ideology;
-        this.candidate = candidate;
-    }
-
-    public Party(Long id, String name, String dateOfFoundation, String ideology, Candidate candidate) {
-        this.id = id;
-        this.name = name;
-        this.dateOfFoundation = dateOfFoundation;
-        this.ideology = ideology;
-        this.candidate = candidate;
-    }
-
     public Party() {
     }
 
+    public Candidate getCandidate() {
+        return candidate;
+    }
+    public void setCandidate(Candidate candidate) {
+        this.candidate = candidate;
+    }
     public Long getId() {
         return id;
     }
-
     public void setId(Long id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
@@ -65,13 +59,6 @@ public class Party {
         this.ideology = ideology;
     }
 
-    public Candidate getCandidate() {
-        return candidate;
-    }
-
-    public void setCandidate(Candidate candidate) {
-        this.candidate = candidate;
-    }
 
     @Override
     public String toString() {

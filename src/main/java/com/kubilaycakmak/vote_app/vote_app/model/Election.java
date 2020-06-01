@@ -16,31 +16,37 @@ public class Election {
     private String createdBy;
     private String description;
 
-
-    @OneToMany
+    @ManyToMany
     private List<Party> parties;
 
-    @OneToMany
-    private List<Candidate> candidates;
+    @ManyToMany
+    private List<Score> score;
 
     public Election() {
     }
 
-    public Election(Date dateStart, Date dateEnd, String createdBy, String description, List<Party> parties) {
+    public List<Score> getScore() {
+        return score;
+    }
+
+    public void setScore(List<Score> score) {
+        this.score = score;
+    }
+
+    public Election(Long id, Date dateStart, Date dateEnd, String createdBy, List<Party> parties) {
+        this.id = id;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
         this.createdBy = createdBy;
-        this.description = description;
         this.parties = parties;
     }
 
-    public Election(Long id, Date dateStart, Date dateEnd, String createdBy, String description, List<Party> parties) {
+    public Election(Long id, Date dateStart, Date dateEnd, String createdBy, String description) {
         this.id = id;
         this.dateStart = dateStart;
         this.dateEnd = dateEnd;
         this.createdBy = createdBy;
         this.description = description;
-        this.parties = parties;
     }
 
     public Long getId() {

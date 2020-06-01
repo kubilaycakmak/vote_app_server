@@ -3,12 +3,14 @@ package com.kubilaycakmak.vote_app.vote_app.controller;
 import com.kubilaycakmak.vote_app.vote_app.model.ERole;
 import com.kubilaycakmak.vote_app.vote_app.model.Person;
 import com.kubilaycakmak.vote_app.vote_app.model.Role;
+import com.kubilaycakmak.vote_app.vote_app.model.Vote;
 import com.kubilaycakmak.vote_app.vote_app.payload.request.LoginRequest;
 import com.kubilaycakmak.vote_app.vote_app.payload.request.SignupRequest;
 import com.kubilaycakmak.vote_app.vote_app.payload.response.JwtResponse;
 import com.kubilaycakmak.vote_app.vote_app.payload.response.MessageResponse;
 import com.kubilaycakmak.vote_app.vote_app.repo.PersonRepository;
 import com.kubilaycakmak.vote_app.vote_app.repo.RoleRepository;
+import com.kubilaycakmak.vote_app.vote_app.repo.VoteRepository;
 import com.kubilaycakmak.vote_app.vote_app.security.jwt.JwtUtils;
 import com.kubilaycakmak.vote_app.vote_app.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,9 @@ public class AuthController {
     PersonRepository personRepository;
 
     @Autowired
+    VoteRepository voteRepository;
+
+    @Autowired
     RoleRepository roleRepository;
 
     @Autowired
@@ -45,6 +50,12 @@ public class AuthController {
 
     @Autowired
     JwtUtils jwtUtils;
+
+    @PostMapping("/vote")
+    public @ResponseBody
+    Iterable<Vote> getVoteInformation(){
+        return voteRepository.findAll();
+    }
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticatePerson(@Valid @RequestBody LoginRequest loginRequest){
@@ -77,18 +88,20 @@ public class AuthController {
                     .body(new MessageResponse("Error: Email is already taken!"));
         }
 
+
         // Create new user's account
         Person person = new Person(
                 signUpRequest.getName(),
-                signUpRequest.getEmail(),
                 signUpRequest.getSurname(),
+                encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getGender(),
+                signUpRequest.getEmail(),
                 signUpRequest.getLastIP(),
                 signUpRequest.getLastDevice(),
                 signUpRequest.getLastLocation(),
                 signUpRequest.getAge(),
-                signUpRequest.getNationId(),
-                encoder.encode(signUpRequest.getPassword()));
+                signUpRequest.getNationId()
+                );
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();

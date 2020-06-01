@@ -1,5 +1,7 @@
 package com.kubilaycakmak.vote_app.vote_app.model;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
@@ -22,6 +24,8 @@ public class Person {
     private Long nationId;
 
     @OneToMany
+    @UniqueElements
+    @Column(unique = true)
     private List<Vote> vote;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -33,61 +37,6 @@ public class Person {
 
     public Person() {
     }
-
-    public Person(String name, String surname, String password, String gender, String email, String lastIP, String lastDevice, String lastLocation, int age, Long nationId, Set<Role> roleSet) {
-        this.name = name;
-        this.surname = surname;
-        this.password = password;
-        this.gender = gender;
-        this.email = email;
-        this.lastIP = lastIP;
-        this.lastDevice = lastDevice;
-        this.lastLocation = lastLocation;
-        this.age = age;
-        this.nationId = nationId;
-        this.roleSet = roleSet;
-    }
-
-    public Person(String name, String email, String password){
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
-
-    public Person(String name, String surname, String password, String gender, String email, String lastIP, String lastDevice, String lastLocation, Address address, int age, Long nationId, List<Vote> vote) {
-        this.name = name;
-        this.surname = surname;
-        this.password = password;
-        this.gender = gender;
-        this.email = email;
-        this.lastIP = lastIP;
-        this.lastDevice = lastDevice;
-        this.lastLocation = lastLocation;
-        this.address = address;
-        this.age = age;
-        this.nationId = nationId;
-        this.vote = vote;
-    }
-
-    public Person(Long id, String name, String surname, String password, String gender, String email, String lastIP, String lastDevice, String lastLocation, Address address, int age, Long nationId, List<Vote> vote) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.password = password;
-        this.gender = gender;
-        this.email = email;
-        this.lastIP = lastIP;
-        this.lastDevice = lastDevice;
-        this.lastLocation = lastLocation;
-        this.address = address;
-        this.age = age;
-        this.nationId = nationId;
-        this.vote = vote;
-    }
-
-    public Person(String name, String email, String surname, String gender, String lastIP, String lastDevice, String lastLocation, int age, long nationId, String encode) {
-    }
-
     public Long getId() {
         return id;
     }
@@ -192,12 +141,18 @@ public class Person {
         this.nationId = nationId;
     }
 
-    public List<Vote> getVote() {
-        return vote;
-    }
 
-    public void setVote(List<Vote> vote) {
-        this.vote = vote;
+    public Person(String name, String surname, String password, String gender, String email, String lastIP, String lastDevice, String lastLocation, int age, Long nationId) {
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.gender = gender;
+        this.email = email;
+        this.lastIP = lastIP;
+        this.lastDevice = lastDevice;
+        this.lastLocation = lastLocation;
+        this.age = age;
+        this.nationId = nationId;
     }
 
     @Override
@@ -215,7 +170,6 @@ public class Person {
                 ", address=" + address +
                 ", age=" + age +
                 ", nationId=" + nationId +
-                ", vote=" + vote +
                 '}';
     }
 }

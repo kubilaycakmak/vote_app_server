@@ -16,9 +16,11 @@ public class Candidate {
     @OneToOne
     private Person person;
 
+    @ManyToOne
+    private Election election;
+
     public Candidate() {
     }
-
     public Candidate(String nation, String spouse, String bio, Person person) {
         this.nation = nation;
         this.spouse = spouse;

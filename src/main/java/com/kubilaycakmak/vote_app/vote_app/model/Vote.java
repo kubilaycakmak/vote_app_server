@@ -3,6 +3,7 @@ package com.kubilaycakmak.vote_app.vote_app.model;
 import javax.persistence.*;
 
 @Entity
+@Table(uniqueConstraints=@UniqueConstraint(columnNames="person_id"))
 public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -10,8 +11,6 @@ public class Vote {
 
     @ManyToOne
     private Person person;
-
-    private int score;
 
     @OneToOne
     @JoinColumn(name = "party_id")
@@ -23,25 +22,23 @@ public class Vote {
     public Vote() {
     }
 
-    public Vote(Party party, Election election, int score) {
+    public Vote(Party party, Election election) {
         this.party = party;
         this.election = election;
-        this.score = score;
     }
 
-    public Vote(Long id, Party party, Election election, int score) {
+    public Vote(Long id, Party party, Election election) {
         this.id = id;
         this.party = party;
         this.election = election;
-        this.score = score;
     }
 
-    public int getScore() {
-        return score;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     public Long getId() {
@@ -74,7 +71,6 @@ public class Vote {
                 "id=" + id +
                 ", party=" + party +
                 ", election=" + election +
-                ", score=" + score +
                 '}';
     }
 }

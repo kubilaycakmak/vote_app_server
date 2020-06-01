@@ -12,18 +12,23 @@ public class SignupRequest {
     @Size(min = 3, max = 20)
     private String name;
 
+    @NotBlank
     @Size(min = 3, max = 20)
     private String surname;
 
+    @NotBlank
     @Size(min = 3, max = 20)
     private String gender;
 
+    @NotBlank
     @Size(min = 3, max = 20)
     private String lastIP;
 
+    @NotBlank
     @Size(min = 3, max = 20)
     private String lastDevice;
 
+    @NotBlank
     @Size(min = 3, max = 20)
     private String lastLocation;
 
@@ -35,7 +40,6 @@ public class SignupRequest {
 
     private long nationId;
 
-
     @Size(max = 50)
     @Email
     private String email;
@@ -45,6 +49,40 @@ public class SignupRequest {
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
+
+    public SignupRequest() {
+    }
+
+    @Override
+    public String toString() {
+        return "SignupRequest{" +
+                "name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", gender='" + gender + '\'' +
+                ", lastIP='" + lastIP + '\'' +
+                ", lastDevice='" + lastDevice + '\'' +
+                ", lastLocation='" + lastLocation + '\'' +
+                ", age=" + age +
+                ", nationId=" + nationId +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
+    public SignupRequest(@NotBlank @Size(min = 3, max = 20) String name, @NotBlank @Size(min = 3, max = 20) String surname, @NotBlank @Size(min = 3, max = 20) String gender, @NotBlank @Size(min = 3, max = 20) String lastIP, @NotBlank @Size(min = 3, max = 20) String lastDevice, @NotBlank @Size(min = 3, max = 20) String lastLocation, @NotBlank @Size(min = 2, max = 20) int age, @NotBlank @Size(min = 1, max = 20) long nationId, @Size(max = 50) @Email String email, Set<String> role, @NotBlank @Size(min = 6, max = 40) String password) {
+        this.name = name;
+        this.surname = surname;
+        this.gender = gender;
+        this.lastIP = lastIP;
+        this.lastDevice = lastDevice;
+        this.lastLocation = lastLocation;
+        this.age = age;
+        this.nationId = nationId;
+        this.email = email;
+        this.role = role;
+        this.password = password;
+    }
 
     public String getSurname() {
         return surname;
