@@ -1,6 +1,10 @@
 package com.kubilaycakmak.vote_app.vote_app.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import javax.annotation.PostConstruct;
 import javax.persistence.*;
+import javax.servlet.http.Part;
 import java.util.Date;
 import java.util.List;
 
@@ -9,8 +13,8 @@ public class Election {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("election_id")
     private Long id;
-
     private Date dateStart;
     private Date dateEnd;
     private String createdBy;
@@ -25,28 +29,20 @@ public class Election {
     public Election() {
     }
 
+    public Election(Long id,String createdBy, Date dateStart, Date dateEnd, String description) {
+        this.id = id;
+        this.createdBy = createdBy;
+        this.dateStart = dateStart;
+        this.dateEnd = dateEnd;
+        this.description = description;
+    }
+
     public List<Score> getScore() {
         return score;
     }
 
     public void setScore(List<Score> score) {
         this.score = score;
-    }
-
-    public Election(Long id, Date dateStart, Date dateEnd, String createdBy, List<Party> parties) {
-        this.id = id;
-        this.dateStart = dateStart;
-        this.dateEnd = dateEnd;
-        this.createdBy = createdBy;
-        this.parties = parties;
-    }
-
-    public Election(Long id, Date dateStart, Date dateEnd, String createdBy, String description) {
-        this.id = id;
-        this.dateStart = dateStart;
-        this.dateEnd = dateEnd;
-        this.createdBy = createdBy;
-        this.description = description;
     }
 
     public Long getId() {

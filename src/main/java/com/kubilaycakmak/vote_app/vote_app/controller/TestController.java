@@ -3,6 +3,7 @@ package com.kubilaycakmak.vote_app.vote_app.controller;
 import com.kubilaycakmak.vote_app.vote_app.model.Election;
 import com.kubilaycakmak.vote_app.vote_app.model.Person;
 import com.kubilaycakmak.vote_app.vote_app.model.Vote;
+import com.kubilaycakmak.vote_app.vote_app.payload.pojo.ElectionParties;
 import com.kubilaycakmak.vote_app.vote_app.payload.request.LoginRequest;
 import com.kubilaycakmak.vote_app.vote_app.payload.response.JwtResponse;
 import com.kubilaycakmak.vote_app.vote_app.repo.ElectionRepository;
@@ -14,9 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -55,25 +54,17 @@ public class TestController {
         return "Admin Board.";
     }
 
+//    @GetMapping("/hello")
+//    public Map<String, List<String>> sayHello() {
+//        HashMap<String, List<String>> map = new HashMap<>();
+//        map.put("elections", electionRepository.findElectionParties());
+//        return map;
+//    }
+
     @GetMapping("/election")
-    public @ResponseBody
-    Iterable<Election> getElectionInformation(){
-        return electionRepository.findAll();
+    public List<Election> findElectionById(){
+        return electionRepository.findElectionById();
     }
 
-    @PostMapping("/vote")
-    public ResponseEntity<?> getVoteInformation(@Valid @RequestBody String auth) {
-        {
-
-            return ResponseEntity.ok(
-                    voteRepository.findAll()
-            );
-        }
-    }
-
-    @GetMapping("/person")
-    public @ResponseBody Iterable<Person> getPersonAll(){
-        return personRepository.findAll();
-    }
 
 }
