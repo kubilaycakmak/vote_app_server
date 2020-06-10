@@ -5,11 +5,11 @@ import javax.persistence.*;
 @Entity
 public class Address {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne(mappedBy = "address")
-    private Person person;
+    @Column(nullable = false)
+    private int person_id;
 
     @Column(nullable = false)
     private String neighborhood;
@@ -20,9 +20,9 @@ public class Address {
     public Address() {
     }
 
-    public Address(String neighborhood, String city) {
-        this.neighborhood = neighborhood;
+    public Address(String city, String neighborhood) {
         this.city = city;
+        this.neighborhood = neighborhood;
     }
 
     public Address(long id, String neighborhood, String city) {

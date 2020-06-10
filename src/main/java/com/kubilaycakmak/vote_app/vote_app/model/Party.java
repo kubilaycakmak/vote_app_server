@@ -16,25 +16,28 @@ public class Party {
     private String name;
     private String dateOfFoundation;
     private String ideology;
+    private int person_id;
 
-    @OneToOne
-    private Candidate candidate;
 
     public Party() {
     }
 
-    public Candidate getCandidate() {
-        return candidate;
+    public int getPerson_id() {
+        return person_id;
     }
-    public void setCandidate(Candidate candidate) {
-        this.candidate = candidate;
+
+    public void setPerson_id(int person_id) {
+        this.person_id = person_id;
     }
+
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
+
     public String getName() {
         return name;
     }
@@ -67,7 +70,7 @@ public class Party {
                 ", name='" + name + '\'' +
                 ", dateOfFoundation='" + dateOfFoundation + '\'' +
                 ", ideology='" + ideology + '\'' +
-                ", candidate=" + candidate +
+                ", candidate=" + person_id +
                 '}';
     }
 }

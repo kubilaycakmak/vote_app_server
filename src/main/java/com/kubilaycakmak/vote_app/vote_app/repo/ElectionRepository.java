@@ -17,9 +17,8 @@ public interface ElectionRepository extends JpaRepository<Election, Long> {
 //    @Query(value = "select new com.kubilaycakmak.vote_app.vote_app.model.Election(elec.id, elec.createdBy, elec.parties) from Election as elec ")
 //    List<Election> findSpecialized();
 
-//    select new map(count(v) as cnt, v.answer) from Survey v group by v.answer
-//    @Query(value="SELECT ep.election_id as id, ep.parties_id as p_id FROM election_parties ep GROUP BY ep.election_id, ep.parties_id", nativeQuery=true)
-//    List<String> findElectionParties();
+    @Query(value="SELECT ep.election_id as id, ep.parties_id as p_id FROM election_parties ep GROUP BY ep.election_id, ep.parties_id", nativeQuery=true)
+    List<String> findElectionParties();
 
 
     @Query(value="SELECT elec.id, elec.created_by, elec.date_start, " +

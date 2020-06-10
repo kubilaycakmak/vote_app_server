@@ -20,21 +20,13 @@ public class Election {
     private String createdBy;
     private String description;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Party> parties;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Score> score;
 
     public Election() {
-    }
-
-    public Election(Long id,String createdBy, Date dateStart, Date dateEnd, String description) {
-        this.id = id;
-        this.createdBy = createdBy;
-        this.dateStart = dateStart;
-        this.dateEnd = dateEnd;
-        this.description = description;
     }
 
     public List<Score> getScore() {

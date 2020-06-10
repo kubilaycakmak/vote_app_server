@@ -23,10 +23,6 @@ public class Person {
     private int age;
     private Long nationId;
 
-    @OneToMany
-    @UniqueElements
-    @Column(unique = true)
-    private List<Vote> vote;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "person_role",

@@ -1,16 +1,16 @@
 package com.kubilaycakmak.vote_app.vote_app.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(uniqueConstraints=@UniqueConstraint(columnNames="person_id"))
 public class Vote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Person person;
+    @ManyToMany
+    private List<Person> person;
 
     @OneToOne
     @JoinColumn(name = "party_id")
@@ -33,11 +33,11 @@ public class Vote {
         this.election = election;
     }
 
-    public Person getPerson() {
+    public List<Person> getPerson() {
         return person;
     }
 
-    public void setPerson(Person person) {
+    public void setPerson(List<Person> person) {
         this.person = person;
     }
 
