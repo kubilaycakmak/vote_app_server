@@ -8,8 +8,8 @@ public class Address {
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
-    private int person_id;
+//    @Column(nullable = false)
+//    private int person_id;
 
     @Column(nullable = false)
     private String neighborhood;

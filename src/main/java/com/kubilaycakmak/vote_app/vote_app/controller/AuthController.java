@@ -51,11 +51,11 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping("/vote")
-    public @ResponseBody
-    Iterable<Vote> getVoteInformation(){
-        return voteRepository.findAll();
-    }
+//    @PostMapping("/vote")
+//    public @ResponseBody
+//    Iterable<Vote> getVoteInformation(){
+//        return voteRepository.findAll();
+//    }
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticatePerson(@Valid @RequestBody LoginRequest loginRequest){

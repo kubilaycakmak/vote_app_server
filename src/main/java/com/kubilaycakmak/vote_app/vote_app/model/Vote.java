@@ -1,7 +1,11 @@
 package com.kubilaycakmak.vote_app.vote_app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Vote {
@@ -9,15 +13,18 @@ public class Vote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
-    private List<Person> person;
+    @ManyToOne
+    @JoinColumn(name = "person_id")
+    private Person person;
 
     @OneToOne
     @JoinColumn(name = "party_id")
     private Party party;
 
     @ManyToOne
+    @JoinColumn(name = "election_id")
     private Election election;
+
 
     public Vote() {
     }
@@ -33,11 +40,11 @@ public class Vote {
         this.election = election;
     }
 
-    public List<Person> getPerson() {
+    public Person getPerson() {
         return person;
     }
 
-    public void setPerson(List<Person> person) {
+    public void setPerson(Person person) {
         this.person = person;
     }
 

@@ -6,27 +6,37 @@ import javax.annotation.PostConstruct;
 import javax.persistence.*;
 import javax.servlet.http.Part;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Election {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonProperty("election_id")
+//    @JsonProperty("election_id")
     private Long id;
     private Date dateStart;
     private Date dateEnd;
     private String createdBy;
     private String description;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Party> parties;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Score> score;
 
     public Election() {
+    }
+
+    public List<Party> getParties() {
+        return parties;
+    }
+
+    public void setParties(List<Party> parties) {
+        this.parties = parties;
     }
 
     public List<Score> getScore() {
@@ -77,13 +87,6 @@ public class Election {
         this.description = description;
     }
 
-    public List<Party> getParties() {
-        return parties;
-    }
-
-    public void setParties(List<Party> parties) {
-        this.parties = parties;
-    }
 
     @Override
     public String toString() {

@@ -1,5 +1,6 @@
 package com.kubilaycakmak.vote_app.vote_app.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -16,18 +17,21 @@ public class Party {
     private String name;
     private String dateOfFoundation;
     private String ideology;
-    private int person_id;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "candidate_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Person candidate;
 
     public Party() {
     }
 
-    public int getPerson_id() {
-        return person_id;
+    public Person getCandidate() {
+        return candidate;
     }
 
-    public void setPerson_id(int person_id) {
-        this.person_id = person_id;
+    public void setCandidate(Person candidate) {
+        this.candidate = candidate;
     }
 
     public Long getId() {
@@ -70,7 +74,7 @@ public class Party {
                 ", name='" + name + '\'' +
                 ", dateOfFoundation='" + dateOfFoundation + '\'' +
                 ", ideology='" + ideology + '\'' +
-                ", candidate=" + person_id +
+                ", candidate=" + candidate +
                 '}';
     }
 }

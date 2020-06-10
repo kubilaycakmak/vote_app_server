@@ -23,6 +23,10 @@ public class Person {
     private int age;
     private Long nationId;
 
+//    @OneToMany
+//    @UniqueElements
+//    @Column(unique = true)
+//    private List<Vote> vote;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "person_role",
@@ -30,6 +34,8 @@ public class Person {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roleSet = new HashSet<>();
+
+
 
     public Person() {
     }
