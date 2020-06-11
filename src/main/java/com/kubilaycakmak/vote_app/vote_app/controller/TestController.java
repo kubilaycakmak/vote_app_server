@@ -19,6 +19,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Part;
 import java.util.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -31,6 +32,7 @@ public class TestController {
 
     @Autowired
     ElectionRepository electionRepository;
+
 
     @Autowired
     VoteRepository voteRepository;
@@ -61,29 +63,24 @@ public class TestController {
         return "Admin Board.";
     }
 
-//    @GetMapping("/hello")
-//    public Map<String, List<String>> sayHello() {
-//        HashMap<String, List<String>> map = new HashMap<>();
-//        map.put("elections", electionRepository.findElectionParties());
-//
-//        return map;
-//    }
-
     @GetMapping("/election")
     public List<Election> findElectionById(){
         return electionRepository.findSpecialized();
     }
 
     @PostMapping("/use/vote")
-    public ResponseEntity<?> useVote(@RequestBody UseVote useVote){
-        Vote vote = new Vote(
-                useVote.getElection_id(),
-                useVote.getParty_id(),
-                useVote.getPerson_id()
-        );
-        voteRepository.save(vote);
-        return ResponseEntity.ok(new MessageResponse("You have used your vote."));
-    }
+    public UseVote useVote(@RequestBody UseVote useVote){
+        Party party = new Party();
+        party.setId(useVote.getParty_id());
+        Election election = new Election();
+        election.setId(useVote.getElection_id());
+        Person person = new Person();
+        person.setId(useVote.getPerson_id());
 
+        voteRepository.saveAndFlush(
+                new Vote(person, party, election));
+        return new UseVote(useVote.getElection_id(),useVote.getParty_id(),useVote.getPerson_id());
+
+    }
 
 }

@@ -40,6 +40,12 @@ public class Vote {
         this.election = election;
     }
 
+    public Vote(Person person, Party party, Election election) {
+        this.person = person;
+        this.party = party;
+        this.election = election;
+    }
+
     public Person getPerson() {
         return person;
     }
