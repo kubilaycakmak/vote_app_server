@@ -1,19 +1,18 @@
-set sql_mode = '';
+SET sql_mode = 'HIGH_NOT_PRECEDENCE';
 INSERT INTO role(name) VALUES('ROLE_USER');
 INSERT INTO role(name) VALUES('ROLE_CANDIDATE');
 INSERT INTO role(name) VALUES('ROLE_MODERATOR');
 INSERT INTO role(name) VALUES('ROLE_ADMIN');
 
-select * from address;
+select * from role;
 
 
-insert into address(id, city, neighborhood) VALUE (1,'istanbul', 'bahcelievler');
-insert into address(id, city, neighborhood) VALUE (2, 'istanbul', 'sariyer');
+INSERT INTO address(city, neighborhood) VALUE ('istanbul', 'bahcelievler');
+insert into address(city, neighborhood) VALUE ('istanbul', 'sariyer');
+insert into address(city, neighborhood) VALUE ('istanbul', 'bagcilar');
 insert into address(city, neighborhood) value ('ankara', 'kecioren');
 
-
-select * from person;
-
+select * from address;
 
 INSERT into person(age, email, gender, last_device, lastip, last_location, name, nation_id, password, surname, address_id)
     value (22, 'c1@gmail.com', 'male', 'Chrome OS', '127.0.0.1', 'Turkey', 'testCandidate1', 1,'password5','surname1',1);
@@ -21,119 +20,186 @@ INSERT into person(age, email, gender, last_device, lastip, last_location, name,
     value (23, 'c2@gmail.com', 'male', 'Mac OS', '127.0.0.2', 'Turkey', 'testCandidate2', 2,'password2','surname2',2);
 INSERT into person(age, email, gender, last_device, lastip, last_location, name, nation_id, password, surname, address_id)
     value (24, 'c3@gmail.com', 'female', 'Chrome OS', '127.0.0.3', 'Turkey', 'testCandidate3', 3,'password3','surname3',3);
+INSERT into person(age, email, gender, last_device, lastip, last_location, name, nation_id, password, surname, address_id)
+    value (25, 'c4@gmail.com', 'female', 'Chrome OS', '127.0.0.4', 'Turkey', 'testCandidate4', 4,'password4','surname4',4);
 
+INSERT into person(age, email, gender, last_device, lastip, last_location, name, nation_id, password, surname, address_id)
+    value (26, 'u1@gmail.com', 'female', 'Chrome OS', '127.0.0.5', 'Turkey', 'testUser1', 5,'password5','surname5',2);
+INSERT into person(age, email, gender, last_device, lastip, last_location, name, nation_id, password, surname, address_id)
+    value (27, 'u2@gmail.com', 'female', 'Chrome OS', '127.0.0.6', 'Turkey', 'testUser2', 6,'password6','surname6',3);
+INSERT into person(age, email, gender, last_device, lastip, last_location, name, nation_id, password, surname, address_id)
+    value (28, 'a1@gmail.com', 'male', 'Chrome OS', '127.0.0.7', 'Turkey', 'admin1', 7,'password7','surname7',1);
 
+select * from person;
 
 insert into person_role(person_id, role_id) VALUE (1,2);
 insert into person_role(person_id, role_id) VALUE (2,2);
 insert into person_role(person_id, role_id) VALUE (3,2);
-# insert into person_role(person_id, role_id) VALUE (4,2);
-# insert into person_role(person_id, role_id) VALUE (5,1);
-
-insert into person_role(person_id, role_id) VALUE (6,3);
+insert into person_role(person_id, role_id) VALUE (4,2);
+insert into person_role(person_id, role_id) VALUE (5,1);
+insert into person_role(person_id, role_id) VALUE (6,1);
 insert into person_role(person_id, role_id) VALUE (7,4);
 
 SELECT * FROM person_role;
 
-SELECT * FROM candidate;
+# Insert into candidate(bio, nation, spouse, person_id) value ('test-bio1','tc','s1',1);
+# Insert into candidate(bio, nation, spouse, person_id) value ('test-bio2','tc','s2',2);
+# Insert into candidate(bio, nation, spouse, person_id) value ('test-bio3','tc','s3',3);
+# Insert into candidate(bio, nation, spouse, person_id) value ('test-bio4','tc','s4',4);
 
-SELECT * FROM person;
+# SELECT * FROM candidate;
+
+INSERT into party(date_of_foundation, ideology, name,candidate_id) value ('2005', 'liberal', 'ldp', 1);
+INSERT into party(date_of_foundation, ideology, name, candidate_id) value ('2003', 'revolution', 'rdp',2 );
+INSERT into party(date_of_foundation, ideology, name, candidate_id) value ('2007', 'democrat', 'ddp',3);
+INSERT into party(date_of_foundation, ideology, name, candidate_id) value ('2011', 'communist', 'cdp',4);
+
+# update party set candidate_id = party.id where candidate_id is null
+
+SELECT * FROM party;
+
+# select *
+# from candidates_persons;
+#
+# select *
+# from person_user;
+#
+# select *
+# from person_master;
+
+# use restapi;
+# CREATE OR REPLACE VIEW candidates_persons AS
+# SELECT restapi.candidate.person_id, restapi.person.name
+# FROM restapi.person
+#         INNER JOIN restapi.candidate ON restapi.candidate.id = restapi.person.id
+#         INNER JOIN restapi.person_role on restapi.person_role.person_id = restapi.person.id
+#         INNER join restapi.role on restapi.role.id = restapi.person_role.role_id
+# WHERE restapi.role.name = 'ROLE_CANDIDATE';
+#
+# use restapi;
+# CREATE OR REPLACE VIEW person_user AS
+# SELECT restapi.person.id, restapi.person.name
+# FROM restapi.person
+#          INNER JOIN restapi.person_role on restapi.person_role.person_id = restapi.person.id
+#          INNER join restapi.role on restapi.role.id = restapi.person_role.role_id
+# WHERE restapi.role.name = 'ROLE_USER';
+#
+# use restapi;
+# CREATE OR REPLACE VIEW person_master AS
+# SELECT restapi.person.id, restapi.person.name, restapi.role.name as 'role'
+# FROM restapi.person
+#          INNER JOIN restapi.person_role on restapi.person_role.person_id = restapi.person.id
+#          INNER join restapi.role on restapi.role.id = restapi.person_role.role_id
+# WHERE restapi.role.name = 'ROLE_MODERATOR' or restapi.role.name = 'ROLE_ADMIN';
 
 
-
-Insert into candidate(bio, nation, spouse, person_id) value ('test-bio','tc','s1',1);
-Insert into candidate(bio, nation, spouse, person_id) value ('test-bio','tc','s1',2);
-Insert into candidate(bio, nation, spouse, person_id) value ('test-bio','tc','s1',3);
-Insert into candidate(bio, nation, spouse, person_id) value ('test-bio','tc','s1',4);
-
-INSERT into party(date_of_foundation, ideology, name, candidate_id) value ('2005', 'liberal', 'ldp', 1);
-INSERT into party(date_of_foundation, ideology, name, candidate_id) value ('2003', 'revolution', 'rdp', 2);
-INSERT into party(date_of_foundation, ideology, name, candidate_id) value ('2007', 'democrat', 'ddp', 3);
-INSERT into party(date_of_foundation, ideology, name, candidate_id) value ('2011', 'communist', 'cdp', 4);
-
-
-
-use restapi;
-CREATE OR REPLACE VIEW candidates_persons AS
-SELECT restapi.candidate.person_id, restapi.person.name
-FROM restapi.person
-        INNER JOIN restapi.candidate ON restapi.candidate.id = restapi.person.id
-        INNER JOIN restapi.person_role on restapi.person_role.person_id = restapi.person.id
-        INNER join restapi.role on restapi.role.id = restapi.person_role.role_id
-WHERE restapi.role.name = 'ROLE_CANDIDATE';
-
-use restapi;
-CREATE OR REPLACE VIEW person_user AS
-SELECT restapi.person.id, restapi.person.name
-FROM restapi.person
-         INNER JOIN restapi.person_role on restapi.person_role.person_id = restapi.person.id
-         INNER join restapi.role on restapi.role.id = restapi.person_role.role_id
-WHERE restapi.role.name = 'ROLE_USER';
-
-use restapi;
-CREATE OR REPLACE VIEW person_master AS
-SELECT restapi.person.id, restapi.person.name, restapi.role.name as 'role'
-FROM restapi.person
-         INNER JOIN restapi.person_role on restapi.person_role.person_id = restapi.person.id
-         INNER join restapi.role on restapi.role.id = restapi.person_role.role_id
-WHERE restapi.role.name = 'ROLE_MODERATOR' or restapi.role.name = 'ROLE_ADMIN';
-
-select *
-from candidates_persons;
-
-select *
-from person_user;
-
-
-select *
-from person_master;
-
-SELECT * from party;
-SELECT * from election;
 
 INSERT into election(created_by, date_end, date_start, description)
-VALUES('kubilay',CURDATE(), CURDATE(), 'test election 1');
+VALUES('master',DATE '2020-06-13', DATE '2020-06-10', 'President');
+
+INSERT into election(created_by, date_end, date_start, description)
+VALUES('master',DATE '2020-06-14', DATE '2020-06-12', 'Mayor');
+
+INSERT into election(created_by, date_end, date_start, description)
+VALUES('master',DATE '2020-06-15', DATE '2020-06-18', 'President of the Republic');
+
+INSERT into election(created_by, date_end, date_start, description)
+VALUES('master',DATE '2020-06-13', DATE '2020-06-10',  'Delegate');
+
+SELECT * from election;
+
 
 INSERT into election_parties(election_id, parties_id) value (1,1);
 INSERT into election_parties(election_id, parties_id) value (1,2);
 INSERT into election_parties(election_id, parties_id) value (1,3);
-
-INSERT into election(created_by, date_end, date_start, description)
-VALUES('ozan',CURDATE(), CURDATE(), 'test election 2');
+INSERT into election_parties(election_id, parties_id) value (1,4);
 
 INSERT into election_parties(election_id, parties_id) value (2,1);
 INSERT into election_parties(election_id, parties_id) value (2,2);
 INSERT into election_parties(election_id, parties_id) value (2,3);
+INSERT into election_parties(election_id, parties_id) value (2,4);
+
+INSERT into election_parties(election_id, parties_id) value (3,1);
+INSERT into election_parties(election_id, parties_id) value (3,2);
+INSERT into election_parties(election_id, parties_id) value (3,3);
+INSERT into election_parties(election_id, parties_id) value (3,4);
+
+INSERT into election_parties(election_id, parties_id) value (4,1);
+INSERT into election_parties(election_id, parties_id) value (4,2);
+INSERT into election_parties(election_id, parties_id) value (4,3);
+INSERT into election_parties(election_id, parties_id) value (4,4);
 
 select * from election_parties;
 
-select * from person;
 
-select * from person_vote;
+select * from person_user;
 
 INSERT into vote(election_id, party_id, person_id) VALUE (1,1,1);
-# INSERT into vote(election_id, party_id, person_id) VALUE (1,1,1);
-# INSERT into vote(election_id, party_id, person_id) VALUE (1,2,2);
+INSERT into vote(election_id, party_id,person_id) VALUE (1,1,2);
+INSERT into vote(election_id, party_id,person_id) VALUE (1,2,3);
+INSERT into vote(election_id, party_id,person_id) VALUE (1,3,4);
+INSERT into vote(election_id, party_id,person_id) VALUE (1,2,4);
+INSERT into vote(election_id, party_id,person_id) VALUE (3,3,1);
+INSERT into vote(election_id, party_id,person_id) VALUE (3,4,2);
+INSERT into vote(election_id, party_id,person_id) VALUE (3,2,3);
+INSERT into vote(election_id, party_id,person_id) VALUE (3,1,4);
 
-insert into person_vote(person_id, vote_id) VALUE (1,1);
+# user daha once oy kullanmis mi kullanmamis mi ve oy kullanacak
 
-select * from person_vote;
+select count(election_id) from vote
+
+# insert into person_vote(person_id, vote_id) VALUE (1,1);
+# insert into person_vote(person_id, vote_id) VALUE (2,2);*/
+
+# select * from person_vote;
 
 select * from vote;
 
 
-# insert into score(party_id, score) VALUE (1,10);
 
-# insert into election_score(election_id, score_id) value (1,1);
-# insert into election_score(election_id, score_id) value (2,2);
 
 insert into score(party_id, score) VALUE (1,5);
 insert into score(party_id, score) VALUE (2,2);
 insert into score(party_id, score) VALUE (3,10);
+insert into score(party_id, score) VALUE (4,4);
+#
+# insert into score(party_id, score) VALUE (1,3);
+# insert into score(party_id, score) VALUE (2,4);
+# insert into score(party_id, score) VALUE (3,20);
+# insert into score(party_id, score) VALUE (4,1);
+#
+# insert into score(party_id, score) VALUE (1,5);
+# insert into score(party_id, score) VALUE (2,4);
+# insert into score(party_id, score) VALUE (3,8);
+# insert into score(party_id, score) VALUE (4,6);
+#
+# insert into score(party_id, score) VALUE (1,7);
+# insert into score(party_id, score) VALUE (2,8);
+# insert into score(party_id, score) VALUE (3,10);
+# insert into score(party_id, score) VALUE (4,4);
 
-insert into election_score(election_id, score_id) value (1,1);
-insert into election_score(election_id, score_id) value (1,2);
-insert into election_score(election_id, score_id) value (1,3);
+insert into election_score(election_id, score_id) value (1,5);
+insert into election_score(election_id, score_id) value (1,6);
+insert into election_score(election_id, score_id) value (1,7);
+insert into election_score(election_id, score_id) value (1,8);
+
+insert into election_score(election_id, score_id) value (2,1);
+insert into election_score(election_id, score_id) value (2,2);
+insert into election_score(election_id, score_id) value (2,3);
+insert into election_score(election_id, score_id) value (2,4);
+
+insert into election_score(election_id, score_id) value (3,1);
+insert into election_score(election_id, score_id) value (3,2);
+insert into election_score(election_id, score_id) value (3,3);
+insert into election_score(election_id, score_id) value (3,4);
+
+insert into election_score(election_id, score_id) value (4,1);
+insert into election_score(election_id, score_id) value (4,2);
+insert into election_score(election_id, score_id) value (4,3);
+insert into election_score(election_id, score_id) value (4,4);
+
+# delete from election_score where 1=1
+# delete from score where 1=1
 #
 # delete from election_score where 1 = 1;
 # delete from score where 1=1;
@@ -168,3 +234,59 @@ SELECT elec.id, elec.created_by, elec.date_start, elec.date_end, elec.descriptio
 
 # update party set vote_by_election = vote_by_election+1 where party.id = 2;
 
+
+select *
+from score;
+
+
+# SELECT ep.election_id, ep.parties_id FROM election_parties ;
+
+select * from party
+select * from election_parties;
+
+# SELECT elec.id, elec.created_by, elec.date_start, elec.date_end, elec.description FROM election as elec;
+
+
+# INSERT into score(score) VALUE (3);
+#
+
+# update party set vote_by_election = vote_by_election+1 where party.id = 2;
+
+
+select ep.parties_id from election inner join election_parties ep;
+
+drop trigger vote_insert
+
+create trigger vote_insert
+    after INSERT
+    on
+        Vote
+    for each row
+BEGIN
+    set @party_id = NEW.party_id;
+    set @election_id = NEW.election_id;
+    UPDATE score set party_id=@party_id, score=score + 1;
+    UPDATE election_score set election_id=@election_id, score_id=LAST_INSERT_ID();
+    END;
+
+CREATE TRIGGER election_party_insert
+    AFTER INSERT
+    ON
+        election_parties
+    FOR EACH ROW
+BEGIN
+    set @party_id = NEW.parties_id;
+    set @election_id = NEW.election_id;
+    INSERT INTO score(party_id, score) value(@party_id, score = score + 1);
+    INSERT INTO election_score(election_id, score_id) value(@election_id, LAST_INSERT_ID());
+END;
+
+select * from vote;
+select * from score;
+select * from election_score;
+
+insert into vote (election_id, party_id, person_id)
+values (1,2,6);
+
+select * from vote;
+delete from election_parties where 1=1
